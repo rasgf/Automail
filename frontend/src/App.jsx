@@ -250,14 +250,14 @@ function App() {
     if (view === 'form') {
       return (
         <>
-          <h1>Classificador de E-mails</h1>
-          <p className="subtitle">Analise e-mails com IA para otimizar seu fluxo de trabalho.</p>
+          <h1>Filtre o Ruído. Responda o Essencial.</h1>
+          <p className="subtitle">Poupe o tempo da sua equipe. Cole um e-mail e nossa IA irá identificar se ele é <strong>produtivo</strong> (requer uma ação) ou <strong>improdutivo</strong> (apenas informativo), sugerindo a resposta ideal para cada caso.</p>
           <form id="analyzeForm" onSubmit={handleSubmit}>
-            <textarea id="text" name="text" rows="10" placeholder="Cole o conteúdo do e-mail aqui..." value={text} onChange={handleTextChange} disabled={isLoading} />
+            <textarea id="text" name="text" rows="10" placeholder='Ex: "Olá, gostaria de saber o status do chamado 12345. Poderiam verificar, por favor?"' value={text} onChange={handleTextChange} disabled={isLoading} />
             <div className="form-actions">
               <label htmlFor="file-input" className="file-label"><FiUploadCloud /><span>{file ? file.name : 'Ou faça upload de um arquivo'}</span></label>
               <input type="file" id="file-input" name="file" accept=".txt,.pdf" onChange={handleFileChange} disabled={isLoading} />
-              <button id="submit" type="submit" disabled={isLoading || (!text && !file)}><FiSend />{isLoading ? 'Analisando...' : 'Analisar E-mail'}</button>
+              <button id="submit" type="submit" disabled={isLoading || (!text && !file)}><FiSend />{isLoading ? 'Analisando...' : 'Gerar Resposta com IA'}</button>
             </div>
           </form>
           {error && <p className="error-message">{error}</p>}
