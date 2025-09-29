@@ -51,6 +51,36 @@ Este projeto vai além de um simples classificador de e-mails. Ele foi concebido
 
 2.  **Design Responsivo "Mobile-First" na Prática:** A interface foi projetada para o desktop, mas a experiência mobile foi completamente reimaginada, não apenas adaptada. Adotamos padrões de UX de aplicativos nativos, como o painel deslizante, para garantir que a usabilidade em telas pequenas fosse intuitiva e fluida, em vez de comprometida.
 
+## 💡 Melhorias e Refinamentos
+
+Durante o desenvolvimento, o projeto passou por um ciclo de iteração para refinar a experiência do usuário e a robustez técnica.
+
+### Experiência do Usuário (UX)
+*   **Clareza da Proposta de Valor:** Com base em feedback de usuários, a comunicação da tela inicial foi reescrita para ser mais direta e orientada a benefícios (`microcopy`), deixando claro o propósito da ferramenta em menos de 5 segundos.
+*   **Responsividade para Tablets:** Ajustes de CSS foram feitos para garantir uma experiência de usuário consistente e sem quebras de layout em telas de tamanho intermediário.
+
+### Otimização de Deploy e Segurança
+*   **Segurança (Hardening):** Após um alerta de segurança, a chave de API que havia sido acidentalmente versionada foi imediatamente invalidada. O arquivo `.env` foi removido, adicionado ao `.gitignore`, e o histórico do repositório foi completamente limpo para remover qualquer vestígio do segredo, seguindo as melhores práticas de segurança.
+*   **Otimização de Build na Nuvem:** O processo de deploy na Render foi otimizado. Os pacotes de dados do NLTK agora são pré-instalados durante a fase de build, o que garante uma inicialização (`startup`) muito mais rápida e confiável da aplicação, eliminando erros de `timeout` (502) causados pelo "spin down" do plano gratuito.
+
+## 🚀 Melhorias e Próximos Passos
+
+Uma visão para a evolução do Automail, transformando-o de um protótipo em uma plataforma de produtividade completa.
+
+### Inteligência e Automação
+*   **Fine-Tuning de Modelo Dedicado:** Treinar (fine-tune) um modelo de linguagem open-source (como uma variação do Mistral ou Llama) com dados de e-mails específicos da empresa para aumentar drasticamente a acurácia da classificação e a relevância das respostas.
+*   **Extração de Ações e Entidades:** Evoluir a IA para não apenas classificar, mas extrair "entidades" (ex: número do pedido, nome do cliente) e "intenções" (ex: "marcar reunião", "solicitar documento") para permitir automações mais profundas.
+*   **Envio Automático Supervisionado:** Para e-mails classificados como "Improdutivos" com alta confiança, implementar uma opção para que o sistema envie a resposta e arquive o e-mail automaticamente.
+
+### Integrações e Ecossistema (Workflow)
+*   **Conexão com Sistemas de Ticketing:** Integrar com APIs de plataformas como Jira ou Zendesk para que um e-mail de suporte técnico possa criar um ticket automaticamente.
+*   **Integração com Agendas:** Ao identificar um pedido de reunião, a IA poderia consultar a Google Agenda/Outlook do usuário e sugerir horários disponíveis na resposta.
+*   **Dashboard de Métricas:** Criar um painel para gestores com métricas de produtividade da equipe (volume de e-mails, tempo médio de resposta, etc.).
+
+### Experiência do Usuário (UX)
+*   **Ações em Massa (Bulk Actions):** Permitir que o usuário selecione múltiplos e-mails e aplique uma ação em lote, como "Arquivar todos".
+*   **Atalhos de Teclado:** Implementar atalhos para "power users" no desktop, permitindo navegar e gerenciar e-mails sem o mouse.
+
 ## ⚙️ Como Executar Localmente
 
 **Pré-requisitos:**

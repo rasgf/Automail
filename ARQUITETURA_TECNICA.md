@@ -55,15 +55,16 @@ A solução é composta por uma arquitetura de 3 camadas, promovendo uma clara s
 
 ## 3. Configuração e Dependências Operacionais
 
-Para o correto funcionamento do sistema, duas configurações de ambiente são cruciais:
+Para o correto funcionamento do sistema, as seguintes configurações de ambiente são cruciais:
 
-1.  **Chave de API (Opcional):**
-    -   A chave `GEMINI_API_KEY` deve ser colocada em um arquivo `.env` na raiz da pasta `backend/`.
+1.  **Chave de API (Opcional mas Recomendado):**
+    -   A chave `GEMINI_API_KEY` é gerenciada como uma variável de ambiente segura na plataforma de hospedagem (Render).
+    -   Para desenvolvimento local, ela deve ser colocada em um arquivo `.env` na pasta `backend/`, que é explicitamente ignorado pelo Git (`.gitignore`) para evitar vazamento de segredos.
     -   A aplicação é totalmente funcional sem esta chave, operando no modo de fallback.
 
-2.  **Dados do NLTK (Obrigatório para Fallback):**
-    -   O mecanismo de fallback depende dos pacotes `stopwords` e `punkt`.
-    -   A instalação é feita via comando: `python -m nltk.downloader stopwords punkt`.
+2.  **Dados do NLTK (Automatizado):**
+    -   O mecanismo de fallback depende dos pacotes `stopwords` e `punkt` do NLTK.
+    -   A instalação desses pacotes é **automatizada durante o processo de build** na Render, conforme definido no `render.yaml`. Isso garante que o ambiente de produção sempre tenha as dependências corretas sem intervenção manual.
 
 ---
 
@@ -86,7 +87,23 @@ Para o correto funcionamento do sistema, duas configurações de ambiente são c
 
 ---
 
-## 5. Próximos Passos Técnicos Sugeridos
+## 5. Arquitetura de Deploy
+
+A solução foi implantada utilizando uma arquitetura desacoplada e moderna, aproveitando os pontos fortes de diferentes plataformas de nuvem (PaaS).
+
+*   **Backend (API):**
+    *   **Plataforma:** Render
+    *   **Descrição:** A aplicação FastAPI em Python é conteinerizada e hospedada como um serviço web na Render. O arquivo `render.yaml` no repositório define a Infraestrutura como Código (IaC), automatizando o ambiente, o comando de build (incluindo a instalação de dependências e dados do NLTK) e o comando de inicialização.
+
+*   **Frontend (UI):**
+    *   **Plataforma:** Vercel
+    *   **Descrição:** A aplicação React (Vite) é hospedada na Vercel, que otimiza os ativos estáticos e os distribui através de uma CDN global para garantir performance e baixa latência de acesso para usuários em qualquer lugar.
+
+*   **Comunicação Frontend-Backend:**
+    *   **Método:** Proxy Reverso (Serverless)
+    *   **Descrição:** Para evitar problemas de CORS e não expor a URL do backend no navegador, o `vercel.json` configura uma regra de `rewrite`. Todas as chamadas do frontend para `/api/*` são interceptadas pela Vercel e redirecionadas de forma segura para o serviço backend na Render. O cliente nunca sabe o endereço real da API.
+
+## 6. Próximos Passos Técnicos Sugeridos
 
 -   **Expandir Cobertura de Testes:** Adicionar mais casos de teste unitário e de integração, explorando diferentes tipos de e-mails.
 -   **Melhorar Extração de PDF:** Substituir `PyPDF2` por `PyMuPDF` para uma extração de texto mais precisa e robusta de arquivos PDF.

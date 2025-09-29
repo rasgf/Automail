@@ -751,3 +751,10 @@ hr {
   @keyframes slideIn { from { transform: translateX(30px); opacity: .9; } to { transform: translateX(0); opacity: 1; } }
   @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(50px); opacity: .8; } }
 }
+
+/* Tablet-specific adjustments */
+@media (max-width: 1100px) {
+  .content {
+    padding: 2rem;
+  }
+}
